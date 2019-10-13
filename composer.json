@@ -1,0 +1,46 @@
+{
+    "name": "zmaglica/rick-and-morty-api-wrapper",
+    "description": "Wrapper for The Rick and Morty API with query builder",
+    "keywords": [
+        "zmaglica",
+        "rick-and-morty-api-wrapper"
+    ],
+    "homepage": "https://github.com/zmaglica/rick-and-morty-api-wrapper",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Zvonimir Maglica",
+            "email": "zvonimirmaglica4@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zmaglica\\RickAndMortyApiWrapper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zmaglica\\RickAndMortyApiWrapper\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "lint": "php-cs-fixer fix --diff --dry-run",
+        "fix": "php-cs-fixer fix"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
