@@ -76,9 +76,8 @@ class Character extends AbstractModel
     }
 
     /**
-     * This helper function will extract all URL ids by key. Key can be location, residence or episode
-     * @param $key
-     * @param $removeDuplicates
+     * @param string $key
+     * @param boolean $removeDuplicates
      * @return array
      */
     private function extractIdsFromResponseBasedOnKey($key, $removeDuplicates)
@@ -86,11 +85,11 @@ class Character extends AbstractModel
         $ids = [];
         $urls = [];
         if ($this->info) {
-            $urls = array_column($this->data['results'], 'location');
+            $urls = array_column($this->data['results'], $key);
         } elseif (isset($this->data[0])) {
-            $urls = array_column($this->data, 'location');
+            $urls = array_column($this->data, $key);
         } else {
-            $urls[] = $this->data['location'];
+            $urls[] = $this->data[$key];
         }
         $urls = array_column($urls, 'url');
         if ($removeDuplicates) {
