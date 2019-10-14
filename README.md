@@ -139,7 +139,7 @@ $characterApi->all()->getOrigins() // Get all origin location from founded chara
 $characterApi->all()->episodes() // Get instace of Episode API from founded characters. Pass false to constructor if you want to remove duplicates
 $characterApi->all()->getEpisodes() // Get all episode from founded characters. Pass false to constructor if you want to remove duplicates
 ```
-Here is the example of getting all episodes alive characters that are females.
+Here is the example of getting all episodes of female characters that are alive.
 
 ``` php
 $characterApi->isAlive()->isFemale->get()->getEpisodes();
@@ -147,10 +147,6 @@ $characterApi->isAlive()->isFemale->get()->getEpisodes();
 $characterApi->whereStatus('alive')->whereGender('female')->get()->getEpisodes();
 // and using this code
 $characterApi->where(['status' => 'alive', 'gender' => 'female'])->get()->getEpisodes();
-// even shorter by calling getEpisodes() instead of get()
-$characterApi->isAlive()->isFemale()->getEpisodes();
-
-
 ```
 ### Todo
 
