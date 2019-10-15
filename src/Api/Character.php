@@ -30,7 +30,9 @@ class Character extends AbstractApi
      */
     public function getOrigin($id = null)
     {
-        return $this->get($id)->getOrigins();
+        $origin = $this->get($id);
+
+        return $origin->hasErrors() ? $origin : $origin->getOrigins();
     }
 
     /**
@@ -41,7 +43,9 @@ class Character extends AbstractApi
      */
     public function getLocation($id = null)
     {
-        return $this->get($id)->getLocations();
+        $locations = $this->get($id);
+
+        return $locations->hasErrors() ? $locations : $locations->getLocations();
     }
 
     /**

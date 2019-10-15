@@ -21,6 +21,7 @@ class RickAndMortyApiWrapper
      */
     private $options = [
         'base_uri' => 'https://rickandmortyapi.com/api/',
+        'http_errors' => false,
     ];
 
     /**

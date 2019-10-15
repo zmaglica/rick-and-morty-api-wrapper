@@ -30,6 +30,16 @@ abstract class AbstractModel
         $this->info = $this->data['info'] ?? null;
     }
 
+    public function hasErrors()
+    {
+        return $this->response->getStatusCode() >= 400;
+    }
+
+    public function getResponseStatusCode()
+    {
+        return $this->response->getStatusCode();
+    }
+
     public function toArray()
     {
         return $this->data;

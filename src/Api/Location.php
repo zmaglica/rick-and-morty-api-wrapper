@@ -27,6 +27,8 @@ class Location extends AbstractApi
      */
     public function getResidents($id = null)
     {
-        return $this->get($id)->getResidents();
+        $locations = $this->get($id);
+
+        return $locations->hasErrors() ? $locations : $locations->getResidents();
     }
 }
