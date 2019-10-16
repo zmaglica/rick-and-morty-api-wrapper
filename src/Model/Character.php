@@ -2,15 +2,17 @@
 
 namespace Zmaglica\RickAndMortyApiWrapper\Model;
 
+use Zmaglica\RickAndMortyApiWrapper\Api\AbstractApi;
+
 class Character extends AbstractModel
 {
     /**
      * Get all locations without running API call. Useful if you want to perform additional filtering.
      *
      * @param bool $removeDuplicates
-     * @return array|\Zmaglica\RickAndMortyApiWrapper\Api\AbstractApi
+     * @return AbstractApi
      */
-    public function locations($removeDuplicates = false)
+    public function locations($removeDuplicates = false) : AbstractApi
     {
         $ids = $this->extractIdsFromResponseBasedOnKey('location', $removeDuplicates);
 
@@ -31,9 +33,9 @@ class Character extends AbstractModel
      * Get all origin locations. Useful if you want to perform additional filtering.
      *
      * @param bool $removeDuplicates
-     * @return array|\Zmaglica\RickAndMortyApiWrapper\Api\AbstractApi
+     * @return AbstractApi
      */
-    public function origins($removeDuplicates = false)
+    public function origins($removeDuplicates = false) : AbstractApi
     {
         $ids = $this->extractIdsFromResponseBasedOnKey('origin', $removeDuplicates);
 
@@ -55,9 +57,9 @@ class Character extends AbstractModel
      * Get all episodes. Useful if you want to perform additional filtering.
      *
      * @param bool $removeDuplicates
-     * @return \Zmaglica\RickAndMortyApiWrapper\Api\AbstractApi
+     * @return AbstractApi
      */
-    public function episodes($removeDuplicates = false)
+    public function episodes($removeDuplicates = false) : AbstractApi
     {
         $ids = $this->extractIdsFromResponseBasedOnKey('episode', $removeDuplicates);
 
@@ -80,9 +82,8 @@ class Character extends AbstractModel
      * @param boolean $removeDuplicates
      * @return array
      */
-    private function extractIdsFromResponseBasedOnKey($key, $removeDuplicates)
+    private function extractIdsFromResponseBasedOnKey($key, $removeDuplicates) : array
     {
-        $ids = [];
         $urls = [];
         if ($this->info) {
             $urls = array_column($this->data['results'], $key);
@@ -96,14 +97,6 @@ class Character extends AbstractModel
             $urls = array_unique($urls);
         }
 
-        foreach ($urls as $url) {
-            $ids[] = substr(strrchr($url, '/'), 1);
-            ;
-        }
-        if (!$ids) {
-            return [];
-        }
-
-        return $ids;
+        return $this->parseIdsFromUrl($urls);
     }
 }

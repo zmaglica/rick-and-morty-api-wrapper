@@ -44,6 +44,10 @@ abstract class AbstractApi
         return $promise;
     }
 
+    /**
+     * @param null $ids
+     * @return mixed
+     */
     public function get($ids = null)
     {
         $uri = $this->getUri($ids ?? $this->ids);
@@ -60,7 +64,7 @@ abstract class AbstractApi
      * @param array $params
      * @return $this
      */
-    public function where(array $params)
+    public function where(array $params) : self
     {
         if (!isset($this->arguments['query'])) {
             $this->arguments['query'] = [];
@@ -78,12 +82,11 @@ abstract class AbstractApi
     }
 
     /**
-     * You can set ids and add additional filters and then execute API request
-     *
+     * You can set ids and add additional filters and then execute API requesr
      * @param $ids
      * @return AbstractApi
      */
-    public function whereId($ids)
+    public function whereId($ids) : self
     {
         return $this->where(['id' => $ids]);
     }
@@ -102,7 +105,7 @@ abstract class AbstractApi
      *
      * @return $this
      */
-    public function clear()
+    public function clear() : self
     {
         $this->ids = null;
         $this->arguments['query'] = [];
@@ -114,7 +117,7 @@ abstract class AbstractApi
      * Get arguments/filters for API
      * @return array
      */
-    public function getArguments()
+    public function getArguments() : array
     {
         return $this->arguments;
     }
@@ -123,9 +126,9 @@ abstract class AbstractApi
      * Set page for request
      *
      * @param int $page
-     * @return $this
+     * @return AbstractApi
      */
-    public function setPage(int $page)
+    public function setPage(int $page) : self
     {
         $this->page = $page;
         $this->where(['page' => $page]);
@@ -135,9 +138,9 @@ abstract class AbstractApi
 
     /**
      * Increment page to simulate pagination
-     * @return $this
+     * @return AbstractApi
      */
-    public function nextPage()
+    public function nextPage() : self
     {
         $this->page++;
         $this->where(['page' => $this->page]);
@@ -147,9 +150,9 @@ abstract class AbstractApi
 
     /**
      * Decrement page to simulate pagination
-     * @return $this
+     * @return AbstractApi
      */
-    public function previousPage()
+    public function previousPage() : self
     {
         /*
          * Minimum page number is 1
@@ -189,9 +192,9 @@ abstract class AbstractApi
      * Example: whereName('Rick') will internally call where function with argument ['name' => 'Rick']
      * @param $name
      * @param $arguments
-     * @return $this
+     * @return AbstractApi
      */
-    public function __call($name, $arguments)
+    public function __call($name, $arguments) : self
     {
         if (strpos($name, 'where') !== 0) {
             throw new \BadFunctionCallException();

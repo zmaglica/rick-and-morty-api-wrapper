@@ -30,12 +30,39 @@ abstract class AbstractModel
         $this->info = $this->data['info'] ?? null;
     }
 
-    public function toArray()
+    /**
+     * Check if there was errors on request
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return $this->response->getStatusCode() >= 400;
+    }
+
+    /**
+     * Get response status code
+     *
+     * @return int
+     */
+    public function getResponseStatusCode(): int
+    {
+        return $this->response->getStatusCode();
+    }
+
+    /**
+     * Get response data
+     * @return array
+     */
+    public function toArray(): array
     {
         return $this->data;
     }
 
-    public function toJson()
+    /**
+     * Get data as json
+     * @return string
+     */
+    public function toJson(): string
     {
         return json_encode($this->data);
     }
@@ -44,7 +71,7 @@ abstract class AbstractModel
      * Check if is first page of response
      * @return bool
      */
-    public function isFirstPage()
+    public function isFirstPage(): bool
     {
         if ($this->info && $this->info['prev']) {
             return false;
@@ -58,7 +85,7 @@ abstract class AbstractModel
      *
      * @return bool
      */
-    public function isLastPage()
+    public function isLastPage(): bool
     {
         if ($this->info && $this->info['next']) {
             return false;
@@ -71,7 +98,7 @@ abstract class AbstractModel
      * Get total number of records
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         if ($this->info) {
             return $this->info['count'];
@@ -91,7 +118,7 @@ abstract class AbstractModel
     /** Get total number of pages
      * @return int
      */
-    public function pages()
+    public function pages(): int
     {
         return $this->info['pages'] ?? 1;
     }
@@ -122,6 +149,10 @@ abstract class AbstractModel
         return $this->parent->nextPage()->sendRequest();
     }
 
+    /**
+     * Go to first page
+     * @return mixed
+     */
     public function firstPage()
     {
         if ($this->info) {
@@ -131,6 +162,11 @@ abstract class AbstractModel
         return null;
     }
 
+    /**
+     * Go to desired page
+     * @param int $page
+     * @return mixed
+     */
     public function goToPage(int $page)
     {
         if ($this->info) {
@@ -138,6 +174,10 @@ abstract class AbstractModel
         }
     }
 
+    /**
+     * Go to last page
+     * @return mixed
+     */
     public function lastPage()
     {
         if ($this->info) {
@@ -145,5 +185,20 @@ abstract class AbstractModel
         }
 
         return null;
+    }
+
+    /**
+     * Helper function to get ids from urls
+     * @param array $urls
+     * @return array
+     */
+    public function parseIdsFromUrl(array $urls) : array
+    {
+        $ids = [];
+        foreach ($urls as $url) {
+            $ids[] = substr(strrchr($url, '/'), 1);
+        }
+
+        return $ids;
     }
 }

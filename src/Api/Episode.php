@@ -26,6 +26,8 @@ class Episode extends AbstractApi
      */
     public function getCharacters($id = null)
     {
-        return $this->get($id)->getCharacters();
+        $episodes = $this->get($id);
+
+        return $episodes->hasErrors() ? $episodes : $episodes->getCharacters();
     }
 }
