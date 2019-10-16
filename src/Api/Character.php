@@ -51,9 +51,9 @@ class Character extends AbstractApi
     /**
      * Query to filter dead characters
      *
-     * @return $this
+     * @return Character
      */
-    public function isDead()
+    public function isDead() : self
     {
         $this->where(['status' => 'dead']);
 
@@ -63,9 +63,9 @@ class Character extends AbstractApi
     /**
      * Query to filter alive characters
      *
-     * @return $this
+     * @return Character
      */
-    public function isAlive()
+    public function isAlive() : self
     {
         $this->where(['status' => 'alive']);
 
@@ -75,9 +75,9 @@ class Character extends AbstractApi
     /**
      * Query to filter characters with unknown status
      *
-     * @return $this
+     * @return Character
      */
-    public function isStatusUnknown()
+    public function isStatusUnknown() : self
     {
         $this->where(['status' => 'unknown']);
 
@@ -87,9 +87,9 @@ class Character extends AbstractApi
     /**
      * Query to filter female characters
      *
-     * @return $this
+     * @return Character
      */
-    public function isFemale()
+    public function isFemale() : self
     {
         $this->where(['gender' => 'female']);
 
@@ -99,9 +99,9 @@ class Character extends AbstractApi
     /**
      * Query to filter male characters
      *
-     * @return $this
+     * @return Character
      */
-    public function isMale()
+    public function isMale() : self
     {
         $this->where(['gender' => 'male']);
 
@@ -111,9 +111,9 @@ class Character extends AbstractApi
     /**
      * Query to filter genderless characters
      *
-     * @return $this
+     * @return Character
      */
-    public function isGenderless()
+    public function isGenderless() : self
     {
         $this->where(['gender' => 'genderless']);
 
@@ -123,9 +123,9 @@ class Character extends AbstractApi
     /**
      * Query to filter characters with unknown gender
      *
-     * @return $this
+     * @return Character
      */
-    public function isGenderUnknown()
+    public function isGenderUnknown() : self
     {
         $this->where(['gender' => 'unknown']);
 

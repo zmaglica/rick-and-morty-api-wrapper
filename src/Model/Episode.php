@@ -2,14 +2,16 @@
 
 namespace Zmaglica\RickAndMortyApiWrapper\Model;
 
+use Zmaglica\RickAndMortyApiWrapper\Api\AbstractApi;
+
 class Episode extends AbstractModel
 {
     /**
      * Get all characters without running API call. Useful if you want to perform additional filtering.
      * @param bool $removeDuplicates
-     * @return \Zmaglica\RickAndMortyApiWrapper\Api\AbstractApi
+     * @return AbstractApi
      */
-    public function characters($removeDuplicates = false)
+    public function characters($removeDuplicates = false): AbstractApi
     {
         $ids = $this->extractIdsFromResponseBasedOnKey('characters', $removeDuplicates);
 
@@ -32,9 +34,8 @@ class Episode extends AbstractModel
      * @param $removeDuplicates
      * @return array
      */
-    private function extractIdsFromResponseBasedOnKey($key, $removeDuplicates)
+    private function extractIdsFromResponseBasedOnKey($key, $removeDuplicates): array
     {
-        $ids = [];
         if ($this->info) {
             $urls = array_column($this->data['results'], $key);
             // flatten array to single one because there can be multiple residents per location
@@ -51,11 +52,6 @@ class Episode extends AbstractModel
             $urls = array_unique($urls);
         }
 
-        foreach ($urls as $url) {
-            $ids[] = substr(strrchr($url, '/'), 1);
-            ;
-        }
-
-        return $ids;
+        return $this->parseIdsFromUrl($urls);
     }
 }
